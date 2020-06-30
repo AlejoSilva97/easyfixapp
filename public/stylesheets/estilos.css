@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: url(../images/fondo/fondo.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+* {
+    box-sizing: border-box;
+}
+.contenedor{
+    width: 100%;
+    padding: 15px;
+}
+
+.formulario{
+    background-color: rgba(245, 245, 245, 0.815);
+    width:0 auto;
+    padding: 2x;
+}
+.politicas{
+    margin-top: 7%;
+}
+h1{
+    padding: 40px;
+    text-align: center;
+    color: rgb(31, 37, 70);
+    font-size: 40px;
+    animation: arriba 1s ease-in;
+}
+input[type="text"],
+input[type="password"]{
+    font-size: 20px;
+    width: 82%;
+    padding: 10px;
+    border: none;
+}
+.input-contenedor{
+    margin-bottom: 15px;
+    border: 1px solid #aaa;
+}
+.icon{
+    min-width: 50px;
+    text-align: center;
+    color: rgb(31, 37, 70);
+}
+.button{
+    border: none;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    background:  rgb(31, 37, 70);
+    padding: 15px 70px;
+    border-radius: 52px;
+    cursor: pointer;
+}
+.button:hover{
+    background: #000;
+}
+p{
+    text-align: center;
+}
+.link{
+    text-decoration: none;
+      color: #c00515;
+    font-weight: 600;
+}
+.link:hover{
+     color: cadetblue;
+}
+@media(min-width:768px)
+{
+    .formulario{
+        margin-left: auto;
+        width: 500px;
+        height: 500px;
+        animation: izquierda 1s ease-in;
+    }
+}
+@keyframes arriba{
+    0%{
+        opacity: 0;
+        transform:  translateY(100px)
+    }
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+@keyframes izquierda{
+    0%{
+        opacity: 0;
+        transform:  translateX(-100px)
+    }
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

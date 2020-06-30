@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://image.flaticon.com/icons/png/512/39/39460.png" sizes="32x32">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <title>Editar perfil</title>
+</head>
+<body id="body">
+    <!-- Navbar -->  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="<%='/posts'%>">
+            <img src="/images/fondo/logoblanco.png" alt="Logo" width="100px">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#LoginContent" aria-controls="LoginContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="LoginContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-link" href="<%='/posts'%>">Publicaciones</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tecnicos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<%='/serviceman/Electricista'%>">Electricista</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Mecanico automotriz'%>">Mecanico automotriz</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Mecanico de motos'%>">Mecanico de motos</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Carpintero'%>">Carpintero</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Tecnico en sistemas'%>">Tecnico en sistemas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/messages/'%><%= user.idUsuario %>">Mis mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/profile/'%><%= user.idUsuario %>"><%= user.nombre %> <%= user.apellido %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/logout'%>">Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="row mt-sm-3 rounded" id="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-10">
+                            <h2 class = "text-center mt-sm-3" id="titulo">Editar perfil</h2><br>
+                        </div>
+                        <div class="col-2">
+                            <a id="titulo" href="<%='/editpass/'%><%= user.idUsuario %>"><h6 class="mt-sm-3">Cambiar contraseña</h6></a>
+                            <a class="" id="titulo" href="<%='/editphoto/'%><%= user.idUsuario %>"><h6>Cambiar foto</h6></a>
+                        </div>
+                    </div>
+                    <form action="/edituser" method="POST" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nombres:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Nombres" name="nombre" value="<%= user.nombre %>" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Apellidos:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Apellidos" name="apellido" value="<%= user.apellido %>" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Correo:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Correo" name="correo" value="<%= user.correo %>" required>
+                            </div>
+                        </div>
+                        <% if(user.idTipo == 3 || user.idTipo == 2) {%>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Descripcion (Vuelve a escribir la descripcion):</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="descripcion" required placeholder="<%= user.descripcion %>"></textarea>
+                                </div>
+                            </div>
+                            <% } %>
+                            
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Telefono:</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" name="telefono" placeholder="Telefono" value="<%= user.telefono %>" required>
+                                </div>
+                            </div>
+                            
+                            <% if(user.categoria != "null") {%>
+                                <% if(user.idTipo != 1) {%>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Categoria de Tecnico:</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" name="categoria">
+                                                <option value="<%= user.categoria %>"><%= user.categoria %></option>
+                                                <option value="Electricista">Electricista</option>
+                                                <option value="Mecanico automotriz">Mecanico automotriz</option>
+                                                <option value="Mecanico de motos">Mecanico de motos</option>
+                                                <option value="Carpintero">Carpintero</option>
+                                                <option value="Tecnico en sistemas">Tecnico en sistemas</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <% } %>
+                                    
+                                    <br>
+                                    <div class="form-group row">
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-info">Enviar datos</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <% if(locals.error){ %>
+                                    <p><%= error %></p>
+                                    <% } %>
+                                </div>
+                            </div>  
+                        </div>
+                        <footer class="footer mt-sm-5 text-center" id="footer">
+                            <h4 class="align-middle my-auto" id="footertext">&copy; Sitio hecho por ASK | <a class="my-auto" id="footertext" href="https://www.facebook.com/pg/Easy-Fix-Colombia-105766757861344/reviews/" target="_blank">Visitanos en facebook</a></h4>
+                        </footer>
+                        
+                        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+                        <style>
+                            #titulo{
+                                color: black;
+                            }
+                            #row{
+                                background-color:rgba(207, 205, 205, 0.74); 
+                                height: auto;
+                            }
+                            #body{
+                                background: url(/images/fondo/fondo.jpg);
+                            }
+                            #nav-link{
+                                color: rgb(240, 240, 240); 
+                            }
+                            #footer{
+                                height: 90px;
+                                padding-top: 20px;
+                                background-color: rgb(29, 29, 29);
+                            }
+                            #footertext{
+                                color: blanchedalmond;
+                            }
+                        </style>
+                    </body>
+                    </html> 

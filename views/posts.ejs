@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://image.flaticon.com/icons/png/512/39/39460.png" sizes="32x32">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <title>Publicaciones</title>
+</head>
+<body id="body">
+    <!-- Navbar -->  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="<%='/posts'%>">
+            <img src="/images/fondo/logoblanco.png" alt="Logo" width="100px">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#LoginContent" aria-controls="LoginContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="LoginContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-link" href="<%='/posts'%>">Publicaciones</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tecnicos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<%='/serviceman/Electricista'%>">Electricista</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Mecanico automotriz'%>">Mecanico automotriz</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Mecanico de motos'%>">Mecanico de motos</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Carpintero'%>">Carpintero</a>
+                        <a class="dropdown-item" href="<%='/serviceman/Tecnico en sistemas'%>">Tecnico en sistemas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/messages/'%><%= user.idUsuario %>">Mis mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/profile/'%><%= user.idUsuario %>"><%= user.nombre %> <%= user.apellido %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-link" href="<%='/logout'%>">Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container" id="container">
+            <div class="row" id="row1">
+                <div class="col-3 text-center rounded" id="col">
+                    <img src="/images/<%= user.foto %>" alt="Foto usuario Logueado" id="fotousuariologueado" class="img-thumbnail border border-dark mt-sm-3">
+                    <h6 id="titulo"><%= user.tipousuario %></h6>
+                    <a href="<%='/edituser/'%><%= user.idUsuario %>" id="titulo"><h6>Editar perfil</h6></a>
+                </div>
+                <% if(user.tipousuario == "Cliente" || user.tipousuario == "Administrador") { %>
+                    <div class="col-8 ml-auto rounded" id="col">
+                        <form action="/posts" method="POST" enctype="multipart/form-data">
+                            <div class="form-group row mt-sm-3">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" placeholder="Titulo de la publicacion" name="titulo" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" rows="3" name="descripcion" required placeholder="Descripcion"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <input type="file" class="form-control-file" name="foto">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <input type="submit" class="btn btn-info" value="Publicar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <% } else { %>
+                        <div class="col-8 ml-auto text-center" id="col1">
+                            
+                            <h4 class="mt-3"> Los tecnicos ofrecen servicios a las publicaciones, Ofrece tus sercicios! </h4>
+                            
+                        </div>
+                        <% } %>    
+                    </div> 
+                    <% for(var i=0; i<posts.length; i++) { %> 
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="row rounded" id="row">
+                            <div class="col">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <img src="/images/<%= posts[i].fotouser %>" alt="FotoUsuario" id="fotousuario" class="border border-dark mx-sm-3 my-sm-3">
+                                            <a class="my-auto" id="titulo" href="<%='/profile/'%><%= posts[i].idUsuario %>"><h6><%= posts[i].nombreusuario %> <%= posts[i].apellidousuario %></h6></a>
+                                            <% if(posts[i].estado == "Abierto") {%>
+                                            <p style="background-color: rgb(214, 34, 34);"><h6 class="my-auto mx-sm-3" id="estado" style="background-color: rgb(93, 187, 39); color: black;"> ..Este problema aun no ha sido resuelto.. </h6></p>
+                                            <% } else {%>
+                                                <p><h6 class="my-auto mx-sm-3" id="estado" style="background-color: rgb(214, 34, 34); color: black;"> ..Este problema ya fue resuelto.. </h6></p>
+                                                <% }%>
+                                            </div>  
+                                    </div>
+                                    <hr>
+                                    <br>
+                                    <div class="panel-body">
+                                        <h5><%= posts[i].titulo %></h5>
+                                        <p><h6><%= posts[i].descripcion %></h6></p>
+                                        <img src="/images/posts/<%= posts[i].foto %>" alt="Imagen de la Publicacion" id="fotopublicacion" class="img-thumbnail border border-dark">
+                                        <% if(user.tipousuario == "Tecnico" || user.tipousuario == "Administrador" || user.idUsuario == posts[i].idUsuario) { %>
+                                            <div class="row">
+                                                <% if(user.tipousuario == "Tecnico") { %>
+                                                    <% if(posts[i].estado != "Cerrado") { %>
+                                                    <a class="btn btn-info mx-sm-3" href="<%='/currentchat/'%><%= user.idUsuario %>/<%= posts[i].idUsuario %>#formulario">Ofrecer Servicio</a>
+                                                    <% } %>
+                                                    <% } %>
+                                                    <% if(user.idUsuario == posts[i].idUsuario || user.tipousuario == "Administrador") { %>
+                                                        <form action="/deletepost" method="POST" class="mx-sm-3">
+                                                            <input type="hidden" value="<%= posts[i].idPublicacion %>" name="idpub">
+                                                            <input type="submit" class="btn btn-danger" value="Eliminar Publicacion">
+                                                        </form>
+                                                        <form action="/closepost" method="POST" class="mx-sm-3">
+                                                            <input type="hidden" value="<%= posts[i].idPublicacion %>" name="idpub">
+                                                            <input type="submit" class="btn btn-warning" value="Problema resuelto">
+                                                        </form>
+                                                        <% } %>
+                                                    </div>
+                                                    <% } %>
+                                                    <p id="titulo"><em>Fecha de la publicacion: <%= posts[i].fecha %></em></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+                                
+                                <footer class="footer mt-sm-5 text-center" id="footer">
+                                    <h4 class="align-middle my-auto" id="footertext">&copy; Sitio hecho por ASK | <a class="my-auto" id="footertext" href="https://www.facebook.com/pg/Easy-Fix-Colombia-105766757861344/reviews/" target="_blank">Visitanos en facebook</a></h4>
+                                </footer>
+                                
+                                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+                                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+                                <style>
+                                    #body{
+                                        background: url(/images/fondo/fondo.jpg);
+                                    }
+                                    
+                                    #titulo{
+                                        color: black;
+                                    }
+                                    #container{
+                                        min-height: 460px;
+                                    }
+                                    #row{
+                                        background-color:rgba(207, 205, 205, 0.74); 
+                                        max-height: auto;
+                                    }
+                                    #row1{
+                                        max-height: auto;
+                                    }
+                                    #col{
+                                        background-color:rgba(207, 205, 205, 0.74); 
+                                        min-height: 200px;
+                                        max-height: auto;
+                                    }
+                                    #col1{
+                                        height: 162.5px;
+                                    }
+                                    #estado{
+                                        height: 25px;
+                                    }
+                                    #nav-link{
+                                        color: rgb(240, 240, 240); 
+                                    }
+                                    #fotousuario{
+                                        height: 80px; 
+                                        width: 80px;
+                                    }
+                                    #fotousuariologueado{
+                                        height: 70%; 
+                                        width: 80%;
+                                    }
+                                    #fotopublicacion{
+                                        height: 400px; 
+                                        width: 70%;
+                                        margin-bottom: 10px;
+                                    }
+                                    #footer{
+                                        height: 90px;
+                                        padding-top: 20px;
+                                        background-color: rgb(29, 29, 29);
+                                    }
+                                    #footertext{
+                                        color: blanchedalmond;
+                                    }
+                                </style>
+                            </body>
+                            </html> 
